@@ -22,6 +22,7 @@ mq_install:
   qm_name: QM1
   dev_objects: yes
   mq_admin_password: password
+  enable_webserver: yes
 
 sysctl_settings:
 - name: kernel.shmmni

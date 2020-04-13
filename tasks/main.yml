@@ -16,9 +16,11 @@
 
 - name: Enable Dev Objects
   include: 03-install-dev-objects.yml
+  when: mq_install.dev_objects
 
 - name: Enable Web Server
   include: 04-enable-mq-webserver.yml
+  when: mq_install.enable_webserver
 
 
 
