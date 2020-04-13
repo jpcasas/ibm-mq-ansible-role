@@ -1,5 +1,4 @@
 ---
-- debug: var=mq_installer
 
 - name: Detect and Download Installer
   include: 01-download-installer-detect.yml
@@ -9,11 +8,17 @@
   include: 01-download-installer.yml
   when: mq_installer.download  and mq_installer.auto_detect_install == false
 
-- name: Install
-  include: 02-install-{{ansible_facts['os_family']}}.yml
+- name: Configure Enviroment
+  include: 02-configure-enviroment.yml
 
-- name: Create MQ 
-  include: 03-create-mq.yml
+- name: Install on {{ansible_facts['os_family']}}
+  include: 02-install-mq.yml
+
+- name: Enable Dev Objects
+  include: 03-install-dev-objects.yml
 
 - name: Enable Web Server
-  include: 04-install_dev_objects.yml
+  include: 04-enable-mq-webserver.yml
+
+
+

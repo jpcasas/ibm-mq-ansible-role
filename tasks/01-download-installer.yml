@@ -1,22 +1,9 @@
 ---
 
-- name: Download installer for Debian
+- name: Download installer for {{ansible_facts.os_family}}
   get_url: 
-   url:  "{{mq_installer.ibm_url}}{{mq_installer.mq_debian_package}}" 
-   dest: "{{mq_install.install_dir}}{{mq_installer.mq_debian_package}}"
-  when: ansible_facts['os_family'] == "Debian"
-
-- name: Download installer for CentOS or RedHat
-  get_url: 
-   url:  "{{mq_installer.ibm_url}}{{mq_installer.mq_linux_package}}" 
-   dest: "{{mq_install.install_dir}}{{mq_installer.mq_linux_package}}"
-  when: ansible_facts['os_family'] == "CentOS" or ansible_facts['os_family'] == "RedHat"
-
-- name: Download installer for Windows
-  get_url: 
-   url:  "{{mq_installer.ibm_url}}{{mq_installer.mq_windows_package}}" 
-   dest: "{{mq_install.install_dir}}{{mq_installer.mq_windows_package}}"
-  when: ansible_facts['os_family'] == "Windows"
+   url:  "{{mq_installer.ibm_url}}{{mq_installer[ansible_facts.os_family+'_package']}}" 
+   dest: "{{mq_install.install_dir}}{{mq_installer[ansible_facts.os_family+'_package']}}"
 
   
 
