@@ -18,6 +18,8 @@ mq_install:
   uncompress_dir: MQServer
   install_dir: /var/tmp/
   qm_name: QM1
+  dev_objects: yes
+  mq_admin_password: password
 
 sysctl_settings:
 - name: kernel.shmmni

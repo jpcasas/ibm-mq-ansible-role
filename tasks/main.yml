@@ -14,3 +14,6 @@
 
 - name: Create MQ 
   include: 03-create-mq.yml
+
+- name: Enable Web Server
+  include: 04-install_dev_objects.yml
