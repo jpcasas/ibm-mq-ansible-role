@@ -1,0 +1,16 @@
+---
+
+- name: setmqinst path
+  shell: chdir=/opt/mqm/bin ./setmqinst -i -p /opt/mqm
+
+- name: Create Queue Manager
+  command: crtmqm "{{mq_install.qm_name}}"
+  become: true
+  become_user: mqm
+  become_method: su
+
+- name: Start Queue Manager
+  command: strmqm "{{mq_install.qm_name}}"
+  become: true
+  become_user: mqm
+  become_method: su

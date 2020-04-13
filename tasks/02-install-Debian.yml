@@ -1,0 +1,52 @@
+---
+
+- name: Ensure group "mqm" exists
+  group:
+    name: "{{mq_system.group}}"
+    gid: "{{mq_system.guid}}"
+    state: present
+
+- name: Add the user mqm
+  user:
+    name: "{{mq_system.user}}"
+    shell: /bin/bash
+    group: "{{mq_system.group}}"
+    uid: "{{mq_system.uid}}"
+    comment: User MQ Admin
+
+- name: Install apache bc
+  apt:
+    name: bc
+    state: present
+
+- name: Set sysctl
+  template:
+    src: 10-ibm-mq-config.j2
+    dest: "/etc/sysctl.d/10-ibm-mq-config.conf"
+
+- name: Set user mqm limits
+  template:
+    src: mqm-limits.j2
+    dest: "/etc/security/limits.d/mqm-limits.conf"
+
+- name: untar install archive
+  unarchive: 
+   src:  "{{mq_install.install_dir}}{{mq_installer.mq_debian_package}}" 
+   dest: "{{mq_install.install_dir}}" 
+   copy: no
+   creates: "{{mq_install.install_dir}}{{mq_install.uncompress_dir}}"
+  become: yes
+
+- name: Accept License
+  shell: chdir="{{mq_install.install_dir}}{{mq_install.uncompress_dir}}" ./mqlicense.sh -accept -text_only
+  become: yes
+
+- name: install with apt
+  shell: chdir="{{mq_install.install_dir}}{{mq_install.uncompress_dir}}" apt -f install ./ibm*.deb
+  become: yes
+
+
+
+
+  
+

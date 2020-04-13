@@ -1,0 +1,17 @@
+---
+- name: Download List of available installs 
+  uri: 
+    url: "{{mq_installer.ibm_url}}"
+    dest: ./index.html
+- name: Get Platform
+  script: ./read.py
+  args:
+    executable: python3
+  register: var_platform
+- debug:
+    var: var_platform
+- name: Download installer
+  get_url: 
+    url: "{{mq_installer.ibm_url}}{{var_platform.stdout_lines[0]}}"
+    dest: "{{mq_install.install_dir}}/{{var_platform.stdout_lines[0]}}"
+      
