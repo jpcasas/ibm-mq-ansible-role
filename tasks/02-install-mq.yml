@@ -1,17 +1,18 @@
 - name: untar install archive
   unarchive: 
-   src:  "{{ibm_mq.install_dir}}{{ibm_mq[ansible_facts.os_family+'_package']}}" 
-   dest: "{{ibm_mq.install_dir}}" 
+  
+   src:  "{{mq_install_dir}}{{mq_installers['mq_'+ansible_facts.os_family+'_package']}}" 
+   dest: "{{mq_install_dir}}" 
    copy: no
-   creates: "{{ibm_mq.install_dir}}{{ibm_mq.uncompress_dir}}"
+   creates: "{{mq_install_dir}}{{mq_uncompress_dir}}"
   become: yes
 
 - name: Accept License
-  shell: chdir="{{ibm_mq.install_dir}}{{ibm_mq.uncompress_dir}}" ./mqlicense.sh -accept -text_only
+  shell: chdir="{{mq_install_dir}}{{mq_uncompress_dir}}" ./mqlicense.sh -accept -text_only
   become: yes
 
 - name: install with linux distro command
-  shell: chdir="{{ibm_mq.install_dir}}{{ibm_mq.uncompress_dir}}" {{ibm_mq[ansible_facts.os_family+'_cmd']}} 
+  shell: chdir="{{mq_install_dir}}{{mq_uncompress_dir}}" {{mq_installers['mq_'+ansible_facts.os_family+'_cmd']}} 
   become: yes
   register: result
   failed_when: result.rc not in [0,34]

@@ -1,18 +1,18 @@
 ---
 
-- name: Ensure group "{{ibm_mq.group}}" exists
+- name: Ensure group {{mq_group}} gid = {{mq_guid}} exists
   group:
-    name: "{{ibm_mq.group}}"
-    gid: "{{ibm_mq.guid}}"
+    name: "{{mq_group}}"
+    gid: "{{mq_guid}}"
     state: present
   become: yes
 
-- name: Add the user {{ibm_mq.user}}
+- name: Add the user {{mq_user}} uid = {{mq_uid}}
   user:
-    name: "{{ibm_mq.user}}"
+    name: "{{mq_user}}"
     shell: /bin/bash
-    group: "{{ibm_mq.group}}"
-    uid: "{{ibm_mq.uid}}"
+    group: "{{mq_group}}"
+    uid: "{{mq_uid}}"
     comment: User MQ Admin
   become: yes
 
@@ -28,8 +28,8 @@
     dest: "/etc/sysctl.d/10-ibm-mq-config.conf"
   become: yes
 
-- name: Set user {{ibm_mq.user}} limits
+- name: Set user {{mq_user}} limits
   template:
     src: mqm-limits.j2
-    dest: "/etc/security/limits.d/{{ibm_mq.user}}-limits.conf"
+    dest: "/etc/security/limits.d/{{mq_user}}-limits.conf"
   become: yes

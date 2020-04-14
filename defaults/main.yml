@@ -1,0 +1,43 @@
+---
+
+
+mq_user: mqm
+mq_group: mqm
+mq_uid: 1001
+mq_guid: 1001
+mq_qm_name: QM1
+mq_ibm_url: https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/
+mq_download_installer: yes
+mq_detect_download_installer: false
+mq_uncompress_dir: MQServer
+mq_install_dir: /var/tmp/
+mq_install_dev_objects: yes
+mq_admin_password: password
+mq_enable_webserver: yes
+
+mq_installers:
+ mq_Debian_package:  mqadv_dev915_ubuntu_x86-64.tar.gz
+ mq_RedHat_package:  mqadv_dev915_linux_x86-64.tar.gz 
+ mq_Windows_package: mqadv_dev915_windows.zip
+ mq_Debian_cmd: apt -f install ./ibm*.deb
+ mq_RedHat_cmd: rpm -ivh MQ*.rpm
+
+  
+
+sysctl_settings:
+- name: kernel.shmmni
+  value: 4096
+- name: kernel.shmmax
+  value: 18446744073692774399
+- name: kernel.shmall
+  value: 18446744073692774399
+- name: kernel.sem
+  value: 32 4096 32 128
+- name: kernel.threads-max
+  value: 32768
+- name: kernel.pid_max
+  value: 32768
+- name: fs.file-max
+  value: 3255749
+- name: net.ipv4.tcp_keepalive_time
+  value: 300

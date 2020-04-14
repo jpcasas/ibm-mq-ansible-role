@@ -1,3 +1,26 @@
 ---
-- debug: var=ibm_mq
+
+- name: Detect and Download Installer
+  include: 01-download-installer-detect.yml
+  when: mq_download_installer and mq_detect_download_installer  
+
+- name: Download Installer
+  include: 01-download-installer.yml
+  when: mq_download_installer and mq_detect_download_installer == false
+
+- name: Configure Enviroment
+  include: 02-configure-enviroment.yml
+
+- name: Install on {{ansible_facts['os_family']}}
+  include: 02-install-mq.yml
+
+- name: Enable Dev Objects
+  include: 03-install-dev-objects.yml
+  when: mq_install_dev_objects
+
+- name: Enable Web Server
+  include: 04-enable-mq-webserver.yml
+  when: mq_enable_webserver
+
+
 

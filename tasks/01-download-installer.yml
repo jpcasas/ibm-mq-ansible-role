@@ -1,9 +1,9 @@
 ---
 
-- name: Download installer for {{ansible_facts.os_family}} will take some minutes
+- name: Download installer for {{ansible_facts.os_family}} will take some minutes 
   get_url: 
-   url:  "{{ibm_mq.ibm_url}}{{ibm_mq[ansible_facts.os_family+'_package']}}" 
-   dest: "{{ibm_mq.install_dir}}{{ibm_mq[ansible_facts.os_family+'_package']}}"
+   url:  "{{mq_ibm_url}}{{mq_installers['mq_'+ansible_facts.os_family+'_package']}}" 
+   dest: "{{mq_install_dir}}{{mq_installers['mq_'+ansible_facts.os_family+'_package']}}"
 
   
 
