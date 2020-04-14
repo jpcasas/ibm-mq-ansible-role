@@ -4,14 +4,16 @@
   group:
     name: mqclient
     state: present
-
+  become: yes
+  
 - name: Add the user Admin
   user:
     name: admin
-    password: "{{mq_install.mq_admin_password}}"
+    password: "{{ibm_mq.mq_admin_password}}"
     shell: /bin/bash
-    group: "{{mq_system.group}}"
+    group: "{{ibm_mq.group}}"
     comment: User Admin
+  become: yes
 
 - name: Add the user app
   user:
@@ -19,6 +21,7 @@
     shell: /bin/bash
     group: mqclient
     comment: User For MQ Apps
+  become: yes
 
 - name: Set Webmqm config
   template:
@@ -26,7 +29,7 @@
     dest: "/var/mqm/web/installations/Installation1/servers/mqweb/mqwebuser.xml"
 
 - name: Create Queue Manager
-  command: crtmqm -c "MQ For dev" -lc -lf 4096 -lp 10 -ls 15  -p 1414 -q -u "{{mq_install.qm_name}}.DLQ" "{{mq_install.qm_name}}"
+  command: crtmqm -c "MQ For dev" -lc -lf 4096 -lp 10 -ls 15  -p 1414 -q -u "{{ibm_mq.qm_name}}.DLQ" "{{ibm_mq.qm_name}}"
   become: true
   become_user: mqm
   become_method: su
@@ -34,7 +37,7 @@
   failed_when: result.rc not in [0,8]  
 
 - name: Start Queue Manager
-  command: strmqm "{{mq_install.qm_name}}"
+  command: strmqm "{{ibm_mq.qm_name}}"
   become: true
   become_user: mqm
   become_method: su
@@ -47,7 +50,7 @@
     dest: "/tmp/10-dev-objects.mqs"
 
 - name: Execute mqs script
-  shell: runmqsc {{mq_install.qm_name}} < /tmp/10-dev-objects.mqs 
+  shell: runmqsc {{ibm_mq.qm_name}} < /tmp/10-dev-objects.mqs 
   become: true
   become_user: mqm
   become_method: su

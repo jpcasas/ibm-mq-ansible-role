@@ -1,0 +1,35 @@
+---
+
+- name: Ensure group "{{ibm_mq.group}}" exists
+  group:
+    name: "{{ibm_mq.group}}"
+    gid: "{{ibm_mq.guid}}"
+    state: present
+  become: yes
+
+- name: Add the user {{ibm_mq.user}}
+  user:
+    name: "{{ibm_mq.user}}"
+    shell: /bin/bash
+    group: "{{ibm_mq.group}}"
+    uid: "{{ibm_mq.uid}}"
+    comment: User MQ Admin
+  become: yes
+
+- name: Install apache bc
+  package:
+    name: bc
+    state: present
+  become: yes
+
+- name: Set sysctl
+  template:
+    src: 10-ibm-mq-config.j2
+    dest: "/etc/sysctl.d/10-ibm-mq-config.conf"
+  become: yes
+
+- name: Set user {{ibm_mq.user}} limits
+  template:
+    src: mqm-limits.j2
+    dest: "/etc/security/limits.d/{{ibm_mq.user}}-limits.conf"
+  become: yes

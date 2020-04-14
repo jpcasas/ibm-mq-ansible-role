@@ -1,26 +1,22 @@
 ---
 
-mq_system:
+ibm_mq:
   user: mqm
   group: mqm
   uid: 1001
   guid: 1001
-
-mq_installer:
+  qm_name: QM1
   ibm_url: https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/
   Debian_package:  mqadv_dev915_ubuntu_x86-64.tar.gz
   RedHat_package:  mqadv_dev915_linux_x86-64.tar.gz 
   Windows_package: mqadv_dev915_windows.zip
-  download: yes
-  auto_detect_install: false
+  download_installer: yes
+  detect_download_installer: false
   Debian_cmd: apt -f install ./ibm*.deb
   RedHat_cmd: rpm -ivh MQ*.rpm
-
-mq_install:
   uncompress_dir: MQServer
   install_dir: /var/tmp/
-  qm_name: QM1
-  dev_objects: yes
+  install_dev_objects: yes
   mq_admin_password: password
   enable_webserver: yes
 
