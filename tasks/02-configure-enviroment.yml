@@ -18,13 +18,13 @@
     name: bc
     state: present
   become: yes
-- name: Set sysctl
-  template:
-    src: 10-ibm-mq-config.j2
-    dest: "/etc/sysctl.d/10-ibm-mq-config.conf"
-  become: yes
-- name: Reload onfiguration
-  shell: sysctl -p /etc/sysctl.d/10-ibm-mq-config.conf
+- name: Modifying Kernel Settings for MQ
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_set: yes
+  with_items: "{{ sysctl_settings }}"
   become: yes
 - name: Set user {{ mq_user }} limits
   template:

@@ -3,7 +3,7 @@
   become: true
   become_user: "{{ mq_user }}"
 - name: start web server
-  shell: su - mqm -c strmqweb 
+  shell: su - mqm -c strmqweb
   become: true
   register: result
   tags:

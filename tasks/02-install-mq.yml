@@ -1,6 +1,8 @@
 ---
 - name: Accept License
-  shell: chdir="{{ mq_install_dir }}{{ mq_uncompress_dir }}" ./mqlicense.sh -accept -text_only
+  command: chdir="{{ mq_install_dir }}{{ mq_uncompress_dir }}" ./mqlicense.sh -accept -text_only
+  args:
+   creates: /tmp/mq_license_*/license/status.dat
   become: yes
 - name: install with linux distro command
   shell: chdir="{{ mq_install_dir }}{{ mq_uncompress_dir }}" {{ mq_installers['mq_'+ansible_facts.os_family+'_cmd'] }}
@@ -8,7 +10,7 @@
   register: result
   failed_when: result.rc not in [0,34]
 - name: setmqinst path
-  shell: chdir=/opt/mqm/bin ./setmqinst -i -p /opt/mqm
+  command: chdir=/opt/mqm/bin ./setmqinst -i -p /opt/mqm
   become: yes
 - name: Create Queue Manager
   command: crtmqm -c "MQ For dev" -lc -lf 4096 -lp 10 -ls 15  -p 1414 -q -u "{{ mq_qm_name }}.DLQ" "{{ mq_qm_name }}"

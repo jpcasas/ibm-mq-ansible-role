@@ -22,9 +22,6 @@ mq_installers:
  mq_Windows_package: mqadv_dev915_windows.zip
  mq_Debian_cmd: apt -f install ./ibm*.deb
  mq_RedHat_cmd: rpm -ivh MQ*.rpm
-
-  
-
 sysctl_settings:
 - name: kernel.shmmni
   value: 4096
@@ -42,3 +39,12 @@ sysctl_settings:
   value: 3255749
 - name: net.ipv4.tcp_keepalive_time
   value: 300
+user_limits:
+  - domain: "{{ mq_user }}"
+    type: "hard"
+    item: "nofile"
+    value: "10240"
+  - domain: "{{  mq_user }}"
+    type: "soft"
+    item: "nofile"
+    value: "10240"
