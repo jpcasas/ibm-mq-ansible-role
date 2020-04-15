@@ -18,7 +18,7 @@ ansible-galaxy
 ```
 
 
-### playbook.yml example
+### playbook-mq.yml example
 
 ```yaml
 - name: setup a MQ development environment
@@ -29,10 +29,17 @@ ansible-galaxy
     mq_admin_password: password
     mq_enable_webserver: yes
     mq_detect_download_installer: yes # Installs last MQ Advanced Developper from repo IBM
-    # mq_download_installer: yes # Installs version 9.1.5 MQ Advanced Developper
     # mq_local_installer: /vagrant/IBM_MQ_9.1.5_LINUX_X86-64.tar.gz
   roles:
     - jpc.ibm-mq-ansible-role
-
+ 
 ```
 
+### Procedure
+ - install ansible
+ - create a file playbook.yml with the content above 
+ - Configure the host example: https://docs.ansible.com/ansible/latest/network/getting_started/first_playbook.html
+ - Run the command 
+ ```bash
+ ansible-playbook playbook-mq.yml
+```
