@@ -1,8 +1,7 @@
 - name: Enable Web Server connections
   shell: setmqweb properties -k httpHost -v "*"
   become: true
-  become_user: "{{mq_user}}"
-  
+  become_user: "{{ mq_user }}"
 - name: start web server
   shell: su - mqm -c strmqweb 
   become: true
@@ -10,5 +9,3 @@
   tags:
    - runweb
   failed_when: result.rc not in [0,1]
-
-

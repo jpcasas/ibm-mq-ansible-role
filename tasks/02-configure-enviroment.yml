@@ -1,41 +1,33 @@
 ---
-
-- name: Ensure group {{mq_group}} gid = {{mq_guid}} exists
+- name: Ensure group {{ mq_group }} gid = {{ mq_guid }} exists
   group:
-    name: "{{mq_group}}"
-    gid: "{{mq_guid}}"
+    name: "{{ mq_group }}"
+    gid: "{{ mq_guid }}"
     state: present
   become: yes
-
-- name: Add the user {{mq_user}} uid = {{mq_uid}}
+- name: Add the user {{ mq_user }} uid = {{ mq_uid }}
   user:
-    name: "{{mq_user}}"
+    name: "{{ mq_user }}"
     shell: /bin/bash
-    group: "{{mq_group}}"
-    uid: "{{mq_uid}}"
+    group: "{{ mq_group }}"
+    uid: "{{ mq_uid }}"
     comment: User MQ Admin
   become: yes
-
 - name: Install apache bc
   package:
     name: bc
     state: present
   become: yes
-
 - name: Set sysctl
   template:
     src: 10-ibm-mq-config.j2
     dest: "/etc/sysctl.d/10-ibm-mq-config.conf"
   become: yes
-
 - name: Reload onfiguration
   shell: sysctl -p /etc/sysctl.d/10-ibm-mq-config.conf
   become: yes
-
-- name: Set user {{mq_user}} limits
+- name: Set user {{ mq_user }} limits
   template:
     src: mqm-limits.j2
-    dest: "/etc/security/limits.d/{{mq_user}}-limits.conf"
+    dest: "/etc/security/limits.d/{{ mq_user }}-limits.conf"
   become: yes
-
-

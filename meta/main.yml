@@ -1,15 +1,12 @@
 ---
 galaxy_info:
   author: Juan Pablo Casas
-  description: Ansible Role Install IBM MQ. installs from 
-               - IBM Repo (version 9.1.5)  
-               - IBM Repo searching for latest version
-               - From a File
-  company: 
+  description: Ansible Role Install IBM MQ. installs from - IBM Repo (version 9.1.5)  - IBM Repo searching for latest version  - From a File
+  company: None
   license: BSD
   min_ansible_version: 2.0
   platforms:
-  - name: Centos
+  - name: EL
     versions:
     - 8
     - 7

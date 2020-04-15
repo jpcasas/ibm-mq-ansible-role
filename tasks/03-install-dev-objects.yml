@@ -1,20 +1,17 @@
 ---
-
 - name: Ensure group "mqclient" exists
   group:
     name: mqclient
     state: present
   become: yes
-  
 - name: Add the user Admin
   user:
     name: admin
-    password: "{{mq_admin_password}}"
+    password: "{{ mq_admin_password }}"
     shell: /bin/bash
-    group: "{{mq_group}}"
+    group: "{{ mq_group }}"
     comment: User Admin
   become: yes
-
 - name: Add the user app
   user:
     name: app
@@ -22,31 +19,24 @@
     group: mqclient
     comment: User For MQ Apps
   become: yes
-
 - name: Set Webmqm config
   template:
     src: basic_registry.j2
     dest: "/var/mqm/web/installations/Installation1/servers/mqweb/mqwebuser.xml"
   become: yes
-
 - name: Start Queue Manager
-  command: strmqm "{{mq_qm_name}}"
+  command: strmqm "{{ mq_qm_name }}"
   become: true
   become_user: mqm
   register: result
-  failed_when: result.rc not in [0,5] 
-
+  failed_when: result.rc not in [0,5]
 - name: Copy MQ Script
   copy:
     src: 10-dev-objects.mqs
     dest: "/tmp/10-dev-objects.mqs"
-
 - name: Execute mqs script
-  shell: runmqsc {{mq_qm_name}} < /tmp/10-dev-objects.mqs 
+  shell: runmqsc {{ mq_qm_name }} < /tmp/10-dev-objects.mqs
   become: true
   become_user: mqm
   register: result
   failed_when: result.rc not in [0]
-
-
-
