@@ -26,6 +26,7 @@
     sysctl_set: yes
   with_items: "{{ sysctl_settings }}"
   become: yes
+  when: ansible_facts['virtualization_type'] != "docker"
 - name: Set user {{ mq_user }} limits
   template:
     src: mqm-limits.j2

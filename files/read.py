@@ -1,17 +1,19 @@
 import platform
+import sys
 
 def main():
    try:
-       with open("index.html", "r") as a_file:
+       with open("/tmp/index.html", "r") as a_file:
            content = a_file.readlines()
            content.reverse()
-           file_to_download = get_file_to_download(content)
+           file_to_download = get_file_to_download(content, sys.argv[1])
            print (file_to_download)
    except IOError:
        print ("Problem with file")
+       sys.exit(1) 
    
 
-def get_file_to_download(list_lines):
+def get_file_to_download(list_lines, os):
     for line in (list_lines) :
                stripped_line = line.strip()
                if "href=" in stripped_line:
@@ -21,22 +23,15 @@ def get_file_to_download(list_lines):
                    file_download = start_string[:end-1]
                    information = file_download.split("_")
                    if(len(information)>=2):
-                       if( information[2] in getOS().lower()): 
+                       if( information[2] in getOS(os).lower()): 
                            return file_download
                        
 
-def getOS():
-  try:
-      os = platform.system()
-      if("Windows" == os):
-          return os
-      else:
-          ver = platform.version()
-          if ("Ubuntu" in ver): return "Ubuntu"
-          else: return "Linux"
-  except:
-    return "N/A"
-
+def getOS(parmos):
+    sysop = ""
+    if ( parmos == "Debian"): return "Ubuntu"
+    elif(parmos == "Windows"): return parmos
+    else: return "Linux"
 
 
 if __name__ == "__main__":

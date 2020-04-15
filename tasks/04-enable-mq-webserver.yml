@@ -2,6 +2,13 @@
   shell: setmqweb properties -k httpHost -v "*"
   become: true
   become_user: "{{ mq_user }}"
+  become_method: su
+  when: ansible_facts['virtualization_type'] == "docker"
+- name: Enable Web Server connections
+  shell: setmqweb properties -k httpHost -v "*"
+  become: true
+  become_user: "{{ mq_user }}"
+  when: ansible_facts['virtualization_type'] != "docker"
 - name: start web server
   shell: su - mqm -c strmqweb
   become: true
@@ -9,3 +16,5 @@
   tags:
    - runweb
   failed_when: result.rc not in [0,1]
+  when: ansible_facts['virtualization_type'] == "docker"
+  

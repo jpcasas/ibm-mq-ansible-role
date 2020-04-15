@@ -27,9 +27,11 @@
 - name: Start Queue Manager
   command: strmqm "{{ mq_qm_name }}"
   become: true
-  become_user: mqm
+  become_user: "{{mq_user}}"
+  become_method: su
   register: result
   failed_when: result.rc not in [0,5]
+  when: ansible_facts['virtualization_type'] == "docker"
 - name: Copy MQ Script
   copy:
     src: 10-dev-objects.mqs
@@ -37,6 +39,15 @@
 - name: Execute mqs script
   shell: runmqsc {{ mq_qm_name }} < /tmp/10-dev-objects.mqs
   become: true
-  become_user: mqm
+  become_user: "{{mq_user}}"
+  become_method: su
   register: result
   failed_when: result.rc not in [0]
+  when: ansible_facts['virtualization_type'] == "docker"
+- name: Execute mqs script
+  shell: runmqsc {{ mq_qm_name }} < /tmp/10-dev-objects.mqs
+  become: true
+  become_user: "{{mq_user}}"
+  register: result
+  failed_when: result.rc not in [0]
+  when: ansible_facts['virtualization_type'] == "docker"
