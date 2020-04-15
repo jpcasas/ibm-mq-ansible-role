@@ -13,7 +13,7 @@ Example
 ### Install the role:
 
 ```bash
-ansible-galaxy 
+ansible-galaxy install jpcasas.ibm_mq_ansible_role
 
 ```
 
@@ -31,7 +31,7 @@ ansible-galaxy
     mq_detect_download_installer: yes # Installs last MQ Advanced Developper from repo IBM
     # mq_local_installer: /vagrant/IBM_MQ_9.1.5_LINUX_X86-64.tar.gz
   roles:
-    - jpc.ibm-mq-ansible-role
+    - jpcasas.ibm_mq_ansible_role
  
 ```
 
