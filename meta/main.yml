@@ -1,0 +1,30 @@
+---
+galaxy_info:
+  author: Juan Pablo Casas
+  description: Ansible Role Install IBM MQ. installs from 
+               - IBM Repo (version 9.1.5)  
+               - IBM Repo searching for latest version
+               - From a File
+  company: 
+  license: BSD2
+  min_ansible_version: 2.0
+  platforms:
+  - name: RedHat distros
+    versions:
+    - 8
+    - 7
+    - 6
+  - name: Debian distros
+    versions:
+    - 18
+    - 19
+  galaxy_tags:
+    - mq
+    - websphere
+    - system
+    - cloud
+    - ibm
+    - queueing
+    - redhat
+    - ubuntu
+dependencies:

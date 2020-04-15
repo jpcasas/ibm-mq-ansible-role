@@ -37,7 +37,7 @@ ansible-galaxy
 
 ### Procedure
  - install ansible
- - create a file playbook.yml with the content above 
+ - create a file playbook-mq.yml with the content above 
  - Configure the host example: https://docs.ansible.com/ansible/latest/network/getting_started/first_playbook.html
  - Run the command 
  ```bash
