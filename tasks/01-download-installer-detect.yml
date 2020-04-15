@@ -6,10 +6,18 @@
 - name: Get Platform
   script: ./read.py
   args:
-    executable: python3
+    executable: python
   register: var_platform
 - name: Auto detect installer for {{ansible_facts.os_family}} Downloading. Will take some minutes
   get_url: 
     url: "{{mq_ibm_url}}{{var_platform.stdout_lines[0]}}"
     dest: "{{mq_install_dir}}/{{var_platform.stdout_lines[0]}}"
+
+- name: untar install archive "{{mq_install_dir}}/{{var_platform.stdout_lines[0]}}"
+  unarchive: 
+   src:  "{{mq_install_dir}}/{{var_platform.stdout_lines[0]}}" 
+   dest: "{{mq_install_dir}}" 
+   copy: no
+   creates: "{{mq_install_dir}}{{mq_uncompress_dir}}"
+  become: yes
       

@@ -2,11 +2,20 @@
 
 - name: Detect and Download Installer
   include: 01-download-installer-detect.yml
-  when: mq_download_installer and mq_detect_download_installer  
+  when: mq_detect_download_installer and mq_local_installer is undefined
 
 - name: Download Installer
   include: 01-download-installer.yml
-  when: mq_download_installer and mq_detect_download_installer == false
+  when: mq_download_installer and mq_local_installer is undefined
+
+- name: Install from provided file
+  unarchive: 
+   src:  "{{mq_local_installer}}" 
+   dest: "{{mq_install_dir}}"
+   copy: no
+   creates: "{{mq_install_dir}}{{mq_uncompress_dir}}"
+  become: yes
+  when: mq_local_installer is not undefined
 
 - name: Configure Enviroment
   include: 02-configure-enviroment.yml
@@ -21,6 +30,8 @@
 - name: Enable Web Server
   include: 04-enable-mq-webserver.yml
   when: mq_enable_webserver
+
+
 
 
 

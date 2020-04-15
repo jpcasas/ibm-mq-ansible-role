@@ -15,6 +15,7 @@ mq_install_dev_objects: yes
 mq_admin_password: password
 mq_enable_webserver: yes
 
+
 mq_installers:
  mq_Debian_package:  mqadv_dev915_ubuntu_x86-64.tar.gz
  mq_RedHat_package:  mqadv_dev915_linux_x86-64.tar.gz 

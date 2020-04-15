@@ -28,8 +28,14 @@
     dest: "/etc/sysctl.d/10-ibm-mq-config.conf"
   become: yes
 
+- name: Reload onfiguration
+  shell: sysctl -p /etc/sysctl.d/10-ibm-mq-config.conf
+  become: yes
+
 - name: Set user {{mq_user}} limits
   template:
     src: mqm-limits.j2
     dest: "/etc/security/limits.d/{{mq_user}}-limits.conf"
   become: yes
+
+

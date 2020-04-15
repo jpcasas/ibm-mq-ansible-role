@@ -1,13 +1,14 @@
 - name: Enable Web Server connections
-  command: setmqweb properties -k httpHost -v "*"
+  shell: setmqweb properties -k httpHost -v "*"
   become: true
   become_user: "{{mq_user}}"
-  become_method: su
-
+  
 - name: start web server
-  command: strmqweb
+  shell: su - mqm -c strmqweb 
   become: true
-  become_user: "{{mq_user}}"
-  become_method: su
   register: result
+  tags:
+   - runweb
   failed_when: result.rc not in [0,1]
+
+
