@@ -2,9 +2,9 @@
 - name: Detect and Download Installer
   include: 01-download-installer-detect.yml
   when: mq_detect_download_installer and mq_local_installer is undefined
-- name: Download Installer
-  include: 01-download-installer.yml
-  when: mq_download_installer and mq_local_installer is undefined
+#- name: Download Installer
+#  include: 01-download-installer.yml
+#  when: mq_download_installer and mq_local_installer is undefined
 - name: Install from provided file
   unarchive:
    src:  "{{ mq_local_installer }}"
