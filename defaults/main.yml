@@ -48,3 +48,4 @@ user_limits:
     type: "soft"
     item: "nofile"
     value: "10240"
+...
