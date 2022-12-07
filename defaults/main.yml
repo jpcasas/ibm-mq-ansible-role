@@ -3,8 +3,8 @@
 
 mq_user: mqm
 mq_group: mqm
-mq_uid: 1001
-mq_guid: 1001
+mq_uid: 2001
+mq_guid: 2001
 mq_qm_name: QM1
 mq_ibm_url: https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/
 mq_download_installer: yes
