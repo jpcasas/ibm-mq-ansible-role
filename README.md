@@ -1,6 +1,9 @@
 Ansible IBM MQ Install
 ==============================
 
+[![Build Status](https://app.travis-ci.com/jpcasas/ibm-mq-ansible-role.svg?branch=master)](https://app.travis-ci.com/jpcasas/ibm-mq-ansible-role)
+[![Galaxy](https://img.shields.io/ansible/role/47913)](https://galaxy.ansible.com/jpcasas/ibm_mq_ansible_role)
+
 Tested on:
 ----------
 
