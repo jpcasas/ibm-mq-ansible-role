@@ -19,8 +19,8 @@ install:
   - ansible --version
 
   # Create ansible.cfg with correct roles_path
-  #- printf '[defaults]\nroles_path=tests/roles' >ansible.cfg
-  - sudo ln -s ../../ tests/roles/mm0.ibm-websphere-mq
+  - printf '[defaults]\nroles_path=tests/roles' >ansible.cfg
+  - sudo ln -s ../../ tests/roles/jpcasas.ibm_mq_ansible_role
 
 
 script:
