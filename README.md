@@ -43,3 +43,7 @@ ansible-galaxy install jpcasas.ibm_mq_ansible_role
  ```bash
  ansible-playbook playbook-mq.yml
 ```
+
+# Installation of MQ with Vagrant
+  
+  https://github.com/jpcasas/ibm-mq-ansible-example
