@@ -16,7 +16,7 @@ Example
 ### Install the role:
 
 ```bash
-ansible-galaxy install jpcasas.ibm_mq_ansible_role
+ansible-galaxy install jpcasas.ibm_mq
 
 ```
 
