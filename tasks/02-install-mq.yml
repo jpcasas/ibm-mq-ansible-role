@@ -29,27 +29,29 @@
   when: ansible_facts['virtualization_type'] != "docker"
 - name: install service for QM
   template:
+    mode: 0644
     src: mq-service.j2
     dest: "/lib/systemd/system/{{ mq_qm_name }}.service"
   become: true
 - name: enable service "{{ mq_qm_name }}"
   systemd:
     name: "{{ mq_qm_name }}"
-    enabled: yes
-    masked: no
+    enabled: true
+    masked: false
   become: true
   notify:
     - Start Queue Manager
 - name: install service for MQ Console
   template:
+    mode: 0644
     src: mqweb-service.j2
     dest: "/lib/systemd/system/mq-webconsole.service"
   become: true
 - name: enable service MQ web console
   systemd:
     name: mq-webconsole
-    enabled: yes
-    masked: no
+    enabled: true
+    masked: false
   become: true
   notify:
     - Start MQ Webconsole

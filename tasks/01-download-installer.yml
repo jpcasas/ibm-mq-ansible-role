@@ -7,6 +7,6 @@
   unarchive:
     src: "{{ mq_install_dir }}{{ mq_installers['mq_'+ansible_facts.os_family+'_package'] }}"
     dest: "{{ mq_install_dir }}"
-    copy: no
+    copy: false
     creates: "{{ mq_install_dir }}{{ mq_uncompress_dir }}"
-  become: yes
+  become: true
