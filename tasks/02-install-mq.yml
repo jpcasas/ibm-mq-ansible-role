@@ -2,16 +2,16 @@
 - name: Accept License
   command: chdir="{{ mq_install_dir }}{{ mq_uncompress_dir }}" ./mqlicense.sh -accept -text_only
   args:
-   creates: /tmp/mq_license_*/license/status.dat
-  become: yes
+    creates: /tmp/mq_license_*/license/status.dat
+  become: true
 - name: install with linux distro command
   shell: chdir="{{ mq_install_dir }}{{ mq_uncompress_dir }}" {{ mq_installers['mq_'+ansible_facts.os_family+'_cmd'] }}
-  become: yes
+  become: true
   register: result
   failed_when: result.rc not in [0,34]
 - name: setmqinst path
   command: chdir=/opt/mqm/bin ./setmqinst -i -p /opt/mqm
-  become: yes
+  become: true
 - name: Create Queue Manager
   command: crtmqm -c "MQ For dev" -lc -lf 4096 -lp 10 -ls 15  -p 1414 -q -u "{{ mq_qm_name }}.DLQ" "{{ mq_qm_name }}"
   become: true
@@ -29,27 +29,29 @@
   when: ansible_facts['virtualization_type'] != "docker"
 - name: install service for QM
   template:
+    mode: 0644
     src: mq-service.j2
     dest: "/lib/systemd/system/{{ mq_qm_name }}.service"
-  become: yes
+  become: true
 - name: enable service "{{ mq_qm_name }}"
   systemd:
     name: "{{ mq_qm_name }}"
-    enabled: yes
-    masked: no
-  become: yes
-  notify: 
-   - Start Queue Manager
+    enabled: true
+    masked: false
+  become: true
+  notify:
+    - Start Queue Manager
 - name: install service for MQ Console
   template:
+    mode: 0644
     src: mqweb-service.j2
     dest: "/lib/systemd/system/mq-webconsole.service"
-  become: yes
+  become: true
 - name: enable service MQ web console
   systemd:
     name: mq-webconsole
-    enabled: yes
-    masked: no
-  become: yes
-  notify: 
-   - Start MQ Webconsole
+    enabled: true
+    masked: false
+  become: true
+  notify:
+    - Start MQ Webconsole

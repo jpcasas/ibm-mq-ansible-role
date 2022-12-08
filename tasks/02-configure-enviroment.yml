@@ -4,7 +4,7 @@
     name: "{{ mq_group }}"
     gid: "{{ mq_guid }}"
     state: present
-  become: yes
+  become: true
 - name: Add the user {{ mq_user }} uid = {{ mq_uid }}
   user:
     name: "{{ mq_user }}"
@@ -12,23 +12,24 @@
     group: "{{ mq_group }}"
     uid: "{{ mq_uid }}"
     comment: User MQ Admin
-  become: yes
+  become: true
 - name: Install apache bc
   package:
     name: bc
     state: present
-  become: yes
+  become: true
 - name: Modifying Kernel Settings for MQ
   sysctl:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
     state: present
-    sysctl_set: yes
+    sysctl_set: true
   with_items: "{{ sysctl_settings }}"
-  become: yes
+  become: true
   when: ansible_facts['virtualization_type'] != "docker"
 - name: Set user {{ mq_user }} limits
   template:
+    mode: 0644
     src: mqm-limits.j2
     dest: "/etc/security/limits.d/{{ mq_user }}-limits.conf"
-  become: yes
+  become: true

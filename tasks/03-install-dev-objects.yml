@@ -3,7 +3,7 @@
   group:
     name: mqclient
     state: present
-  become: yes
+  become: true
 - name: Add the user Admin
   user:
     name: admin
@@ -11,43 +11,46 @@
     shell: /bin/bash
     group: "{{ mq_group }}"
     comment: User Admin
-  become: yes
+  become: true
 - name: Add the user app
   user:
     name: app
     shell: /bin/bash
     group: mqclient
     comment: User For MQ Apps
-  become: yes
+  become: true
 - name: Set Webmqm config
   template:
+    mode: 0660
     src: basic_registry.j2
     dest: "/var/mqm/web/installations/Installation1/servers/mqweb/mqwebuser.xml"
-  become: yes
-- name: Start Queue Manager
-  command: strmqm "{{ mq_qm_name }}"
   become: true
-  become_user: "{{mq_user}}"
-  become_method: su
-  register: result
-  failed_when: result.rc not in [0,5]
-  when: ansible_facts['virtualization_type'] == "docker"
+# - name: Start Queue Manager
+#   command: strmqm "{{ mq_qm_name }}"
+#   become: true
+#   become_user: "{{mq_user}}"
+#   become_method: su
+#   register: result
+#   failed_when: result.rc not in [0,5]
+#   when: ansible_facts['virtualization_type'] == "docker"
 - name: Copy MQ Script
   copy:
+    mode: 0777
     src: 10-dev-objects.mqs
     dest: "/tmp/10-dev-objects.mqs"
-- name: Execute mqs script
-  shell: runmqsc {{ mq_qm_name }} < /tmp/10-dev-objects.mqs
-  become: true
-  become_user: "{{mq_user}}"
-  become_method: su
-  register: result
-  failed_when: result.rc not in [0]
-  when: ansible_facts['virtualization_type'] == "docker"
-- name: Execute mqs script
-  shell: runmqsc {{ mq_qm_name }} < /tmp/10-dev-objects.mqs
-  become: true
-  become_user: "{{mq_user}}"
-  register: result
-  failed_when: result.rc not in [0]
-  when: ansible_facts['virtualization_type'] == "docker"
+
+# - name: Execute mqs script
+#   shell: runmqsc {{ mq_qm_name }} < /tmp/10-dev-objects.mqs
+#   become: true
+#   become_user: "{{mq_user}}"
+#   become_method: su
+#   register: result
+#   failed_when: result.rc not in [0]
+#   when: ansible_facts['virtualization_type'] == "docker"
+# - name: Execute mqs script
+#   shell: runmqsc {{ mq_qm_name }} < /tmp/10-dev-objects.mqs
+#   become: true
+#   become_user: "{{mq_user}}"
+#   register: result
+#   failed_when: result.rc not in [0]
+#   when: ansible_facts['virtualization_type'] == "docker"

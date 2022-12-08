@@ -9,7 +9,7 @@ sudo: required
 addons:
   apt:
     packages:
-    - python-pip
+      - python-pip
 
 install:
   # Install ansible
@@ -22,12 +22,10 @@ install:
   - printf '[defaults]\nroles_path=tests/roles' >ansible.cfg
   - sudo ln -s ../../ tests/roles/jpcasas.ibm_mq_ansible_role
 
-
 script:
   # Basic role syntax check
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
 #  - ansible-playbook tests/test.yml -i tests/inventory --connection=local --check
-
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

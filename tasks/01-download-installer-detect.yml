@@ -14,8 +14,8 @@
     dest: "{{ mq_install_dir }}/{{ var_platform.stdout_lines[-1] }}"
 - name: untar install archive "{{ mq_install_dir }}{{ var_platform.stdout_lines[-1] }}"
   unarchive:
-   src:  "{{ mq_install_dir }}{{ var_platform.stdout_lines[-1] }}"
-   dest: "{{ mq_install_dir }}"
-   copy: no
-   creates: "{{ mq_install_dir }}{{ mq_uncompress_dir }}"
-  become: yes
+    src: "{{ mq_install_dir }}{{ var_platform.stdout_lines[-1] }}"
+    dest: "{{ mq_install_dir }}"
+    copy: false
+    creates: "{{ mq_install_dir }}{{ mq_uncompress_dir }}"
+  become: true
