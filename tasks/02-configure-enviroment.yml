@@ -29,6 +29,7 @@
   when: ansible_facts['virtualization_type'] != "docker"
 - name: Set user {{ mq_user }} limits
   template:
+    mode: 0644
     src: mqm-limits.j2
     dest: "/etc/security/limits.d/{{ mq_user }}-limits.conf"
   become: true
