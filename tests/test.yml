@@ -1,5 +1,4 @@
-
-
+---
 - hosts: all
   roles:
   - { role: jpcasas.ibm_mq_ansible_role }

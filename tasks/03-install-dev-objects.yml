@@ -3,7 +3,7 @@
   group:
     name: mqclient
     state: present
-  become: yes
+  become: true
 - name: Add the user Admin
   user:
     name: admin
@@ -11,19 +11,19 @@
     shell: /bin/bash
     group: "{{ mq_group }}"
     comment: User Admin
-  become: yes
+  become: true
 - name: Add the user app
   user:
     name: app
     shell: /bin/bash
     group: mqclient
     comment: User For MQ Apps
-  become: yes
+  become: true
 - name: Set Webmqm config
   template:
     src: basic_registry.j2
     dest: "/var/mqm/web/installations/Installation1/servers/mqweb/mqwebuser.xml"
-  become: yes
+  become: true
 - name: Start Queue Manager
   command: strmqm "{{ mq_qm_name }}"
   become: true

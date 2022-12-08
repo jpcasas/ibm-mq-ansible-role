@@ -14,7 +14,6 @@
   become: true
   register: result
   tags:
-   - runweb
+    - runweb
   failed_when: result.rc not in [0,1]
   when: ansible_facts['virtualization_type'] == "docker"
-  

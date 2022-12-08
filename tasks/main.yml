@@ -7,11 +7,11 @@
 #  when: mq_download_installer and mq_local_installer is undefined
 - name: Install from provided file
   unarchive:
-   src:  "{{ mq_local_installer }}"
-   dest: "{{ mq_install_dir }}"
-   copy: no
-   creates: "{{ mq_install_dir }}{{ mq_uncompress_dir }}"
-  become: yes
+    src: "{{ mq_local_installer }}"
+    dest: "{{ mq_install_dir }}"
+    copy: no
+    creates: "{{ mq_install_dir }}{{ mq_uncompress_dir }}"
+  become: true
   when: mq_local_installer is not undefined
 - name: Configure Enviroment
   include: 02-configure-enviroment.yml

@@ -1,12 +1,12 @@
 - name: Start Queue Manager
   become: true
   service:
-   name: "{{ mq_qm_name }}"
-   state: started
+    name: "{{ mq_qm_name }}"
+    state: started
   when: ansible_facts['virtualization_type'] != "docker"
 - name: Start MQ Webconsole
   become: true
   service:
-   name: mq-webconsole
-   state: started
+    name: mq-webconsole
+    state: started
   when: ansible_facts['virtualization_type'] != "docker"
