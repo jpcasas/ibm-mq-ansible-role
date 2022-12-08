@@ -34,7 +34,7 @@ ansible-galaxy install jpcasas.ibm_mq
     mq_detect_download_installer: yes # Installs last MQ Advanced Developper from repo IBM
     # mq_local_installer: /vagrant/IBM_MQ_9.1.5_LINUX_X86-64.tar.gz
   roles:
-    - jpcasas.ibm_mq_ansible_role
+    - jpcasas.ibm_mq
  
 ```
 
